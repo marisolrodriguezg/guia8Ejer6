@@ -3,12 +3,13 @@ package Servicio;
 
 import Entidades.Producto;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ProductoServicio {
     private HashMap<String,Producto>productoMap;
     private Scanner leer;
-
+ Producto pm=new Producto();
     public ProductoServicio() {
         this.productoMap=new HashMap<>();
         this.leer = new Scanner(System.in).useDelimiter("\n");
@@ -19,11 +20,11 @@ public class ProductoServicio {
         do {
         System.out.println("ingrese el nombre del producto a cargar");
         String nomProducto=leer.next();
-        nomProducto=nomProducto.toUpperCase();
+        pm.setNombre(nomProducto.toUpperCase());
         
         System.out.println("ingrese el predcio del producto");
-        Double precProd=leer.nextDouble();
-        productoMap.put(nomProducto,new Producto(nomProducto, precProd));
+        pm.setPrecio(leer.nextDouble());
+        productoMap.put(pm.getNombre(),new Producto(pm.getNombre(), pm.getPrecio()));
           System.out.println("Quiere ingresar otro Producto?(si/no)");
             respuesta = leer.next();
 
@@ -37,13 +38,38 @@ public class ProductoServicio {
          } 
     }
     public void modificarPrecio(){
-        System.out.println("a que producto quieres cambian el precio");
-         String prodCamb=leer.next();
+
+              System.out.println("a que producto quieres cambian el precio");
+        
+          String prodCamb=leer.next();
         prodCamb=prodCamb.toUpperCase();
-        System.out.println("que precio ingresamos ?");
-        Double nuevoPrecio=leer.nextDouble();
-        productoMap.put(prodCamb,new Producto(nuevoPrecio));
+         
+            for (Map.Entry<String, Producto> aux : productoMap.entrySet()) {
+                String key = aux.getKey();
+                Producto value = aux.getValue();
+                
+            
+            if (prodCamb.equals(aux.getKey())){
+                 System.out.println("que precio ingresamos ?");
+            pm.setPrecio(leer.nextDouble());
+            pm.setNombre(key);
+            productoMap.put(key, pm);
+        }
+        }
+        for (Map.Entry<String, Producto> entry : productoMap.entrySet()) {
+          System.out.println("Nombre del producto=" + entry.getKey() + ", Precio" + entry.getValue());
+            
+        }
     }
+    
+     
+//        System.out.println("a que producto quieres cambian el precio");
+//         String prodCamb=leer.next();
+//        prodCamb=prodCamb.toUpperCase();
+//        System.out.println("que precio ingresamos ?");
+//        Double nuevoPrecio=leer.nextDouble();
+//        productoMap.put(prodCamb,new Producto(nuevoPrecio));
+    
     public void eliminarProducto(){
         System.out.println("que producto desea eliminar");
         String prodEliminar=leer.next();
