@@ -14,6 +14,9 @@ public class ProductoServicio {
         this.leer = new Scanner(System.in).useDelimiter("\n");
     }
     public void introducirProducto(){
+         String respuesta = "";
+
+        do {
         System.out.println("ingrese el nombre del producto a cargar");
         String nomProducto=leer.next();
         nomProducto=nomProducto.toUpperCase();
@@ -21,6 +24,10 @@ public class ProductoServicio {
         System.out.println("ingrese el predcio del producto");
         Double precProd=leer.nextDouble();
         productoMap.put(nomProducto,new Producto(nomProducto, precProd));
+          System.out.println("Quiere ingresar otro Producto?(si/no)");
+            respuesta = leer.next();
+
+        } while (respuesta.equalsIgnoreCase("si"));
     } 
      public void mostrarProducto(){
          for (java.util.Map.Entry<java.lang.String, Entidades.Producto> entry : productoMap.entrySet()) {
